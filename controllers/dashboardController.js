@@ -1,3 +1,5 @@
+const Coach = require("../models/Coach");
+const Trial = require("../models/Trial");
 const Player = require("../models/Player");
 
 // TOP SCORERS
@@ -76,9 +78,34 @@ const getBestStamina = async (req, res) => {
     }
 };
 
+const getDashboardStats = async (req, res) => {
+    try {
+
+        const totalPlayers = await Player.countDocuments();
+
+        const totalCoaches = await Coach.countDocuments();
+
+        const totalTrials = await Trial.countDocuments();
+
+        res.json({
+            totalPlayers,
+            totalCoaches,
+            totalTrials
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+};
+
 module.exports = {
     getTopScorers,
     getTopAssists,
     getFastestPlayers,
-    getBestStamina
+    getBestStamina,
+    getDashboardStats
 };

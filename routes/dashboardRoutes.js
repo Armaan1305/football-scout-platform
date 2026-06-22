@@ -6,8 +6,11 @@ const {
     getTopScorers,
     getTopAssists,
     getFastestPlayers,
-    getBestStamina
+    getBestStamina,
+    getDashboardStats
 } = require("../controllers/dashboardController");
+
+router.get("/stats", getDashboardStats);
 
 router.get("/top-scorers", getTopScorers);
 

@@ -1,42 +1,84 @@
 const Coach = require("../models/Coach");
 
-// CREATE COACH
+// CREATE
 const createCoach = async (req, res) => {
-    try {
+  try {
 
-        const coach = new Coach(req.body);
+    const coach = new Coach(req.body);
 
-        await coach.save();
+    await coach.save();
 
-        res.status(201).json(coach);
+    res.status(201).json(coach);
 
-    } catch (error) {
+  } catch (error) {
 
-        res.status(500).json({
-            message: error.message
-        });
+    res.status(500).json({
+      message: error.message
+    });
 
-    }
+  }
 };
 
-// GET ALL COACHES
+// GET ALL
 const getCoaches = async (req, res) => {
-    try {
+  try {
 
-        const coaches = await Coach.find();
+    const coaches = await Coach.find();
 
-        res.json(coaches);
+    res.json(coaches);
 
-    } catch (error) {
+  } catch (error) {
 
-        res.status(500).json({
-            message: error.message
-        });
+    res.status(500).json({
+      message: error.message
+    });
 
-    }
+  }
+};
+
+// UPDATE
+const updateCoach = async (req, res) => {
+  try {
+
+    const coach = await Coach.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    res.json(coach);
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: error.message
+    });
+
+  }
+};
+
+// DELETE
+const deleteCoach = async (req, res) => {
+  try {
+
+    await Coach.findByIdAndDelete(req.params.id);
+
+    res.json({
+      message: "Coach Deleted Successfully"
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: error.message
+    });
+
+  }
 };
 
 module.exports = {
-    createCoach,
-    getCoaches
+  createCoach,
+  getCoaches,
+  updateCoach,
+  deleteCoach
 };
